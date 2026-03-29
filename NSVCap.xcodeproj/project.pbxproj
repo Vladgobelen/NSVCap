@@ -12,7 +12,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A2000001 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFil…	AD000001 /* Debug */,
+		A2000001 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swi…
+				AD000001 /* Debug */,
 				AD000002 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
