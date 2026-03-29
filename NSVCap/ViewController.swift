@@ -1,3 +1,4 @@
+// NSVCap/ViewController.swift
 import UIKit
 import WebKit
 import AVFoundation
@@ -16,12 +17,19 @@ class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
         UIApplication.shared.isIdleTimerDisabled = true
     }
     
+    // 🔥 АУДИО: Критично для WebRTC
     private func setupAudioSession() {
         let session = AVAudioSession.sharedInstance()
         do {
             try session.setCategory(.playAndRecord,
                                   mode: .videoChat,
-                                  options: [.allowBluetooth, .allowBluetoothA2DP, .allowAirPlay, .defaultToSpeaker, .mixWithOthers])
+                                  options: [
+                                      .allowBluetooth,
+                                      .allowBluetoothA2DP,
+                                      .allowAirPlay,
+                                      .defaultToSpeaker,
+                                      .mixWithOthers
+                                  ])
             try session.setActive(true, options: .notifyOthersOnDeactivation)
             print("✅ Audio session configured")
         } catch {
@@ -29,6 +37,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
         }
     }
     
+    // 🔥 WKWEBVIEW
     private func setupWebView() {
         let config = WKWebViewConfiguration()
         config.mediaTypesRequiringUserActionForPlayback = []
@@ -51,6 +60,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
         webView.load(URLRequest(url: url))
     }
     
+    // 🔥 РАЗРЕШЕНИЯ: Микрофон/камера
     func webView(_ webView: WKWebView,
                  decideMediaCapturePermissionsFor origin: WKSecurityOrigin,
                  initiatedByFrame frame: WKFrameInfo,
@@ -59,6 +69,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
         decisionHandler(.grant)
     }
     
+    // 🔥 ВЫБОР ФАЙЛОВ
     func webView(_ webView: WKWebView,
                  runOpenPanelWith parameters: WKOpenPanelParameters,
                  initiatedByFrame frame: WKFrameInfo,
@@ -76,6 +87,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
         present(picker, animated: true)
     }
     
+    // 🔥 НАВИГАЦИЯ
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -92,6 +104,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
     }
 }
 
+// 🔥 IMAGE PICKER
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController,
                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

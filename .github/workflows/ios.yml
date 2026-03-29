@@ -1,21 +1,14 @@
+# .github/workflows/ios.yml
 name: Build iOS
 
-on:
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
+on: [push, pull_request]
 
 jobs:
   build:
     runs-on: macos-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_15.2.app/Contents/Developer
-
+      - uses: actions/checkout@v4
+      
       - name: Build
         run: |
           xcodebuild -project NSVCap.xcodeproj \
@@ -26,9 +19,8 @@ jobs:
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+            
+      - uses: actions/upload-artifact@v4
         with:
           name: iOS-App
           path: build/*.xcarchive
